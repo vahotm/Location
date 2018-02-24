@@ -44,7 +44,12 @@ extension DataManager {
     }
     
     class func points() -> [Point] {
-        return RealmManager.fetchObjects()
+        return RealmManager.fetchObjects(ofType: Point.self)
+    }
+
+    class func points(_ type: PointType) -> [Point] {
+        let predicate = "typeRaw == \(type.rawValue)"
+        return RealmManager.fetchObjects(ofType: Point.self, predicate: predicate)
     }
 }
 
@@ -67,18 +72,17 @@ private extension DataManager {
                 if let locations = json["locations"].arrayObject {
                     // Delete and update points
                     DispatchQueue.main.async {
-                        let predicate = "typeRaw == \(PointType.hard.rawValue)"
-                        let storedPoints: [Point] = RealmManager.fetchObjects(predicate: predicate)
+                        let storedPoints: [Point] = self.points(.predefined)
                         RealmManager.rewrite(storedPoints, with: locations)
                         
-                        completion(RealmManager.fetchObjects(), nil)
+                        completion(RealmManager.fetchObjects(ofType: Point.self), nil)
                     }
                 }
                 return
             }
             
             DispatchQueue.main.async {
-                completion(RealmManager.fetchObjects(), nil)
+                completion(RealmManager.fetchObjects(ofType: Point.self), nil)
             }
         }
         return task

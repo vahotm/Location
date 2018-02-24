@@ -16,7 +16,11 @@ final class RealmManager {
         let config = Realm.Configuration()
         Realm.Configuration.defaultConfiguration = config
     }
-    
+
+    class func testSetup() {
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = "Test database"
+    }
+
     class func create<T: Object>(_ object: T) {
         guard let realm = try? Realm() else { return }
         
@@ -41,7 +45,7 @@ final class RealmManager {
         }
     }
     
-    class func fetchObjects<T: Object>(predicate: String? = nil) -> [T] {
+    class func fetchObjects<T: Object>(ofType: T.Type, predicate: String? = nil) -> [T] {
         guard let realm = try? Realm() else { return [] }
         
         let objects = realm.objects(T.self)

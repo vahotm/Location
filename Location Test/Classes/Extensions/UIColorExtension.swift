@@ -28,3 +28,8 @@ extension UIColor {
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }
 }
+
+enum MarkerColor {
+    static let red = UIColor(hexString:"#e74c3c")
+    static let yellow = UIColor(hexString:"#f1c40f")
+}

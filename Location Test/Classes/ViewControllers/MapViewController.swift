@@ -143,11 +143,12 @@ class MapViewController: UIViewController {
             let touchPoint = gestureRecognizer.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
             
-            let point = Point()
-            point.name = "New Point"
-            point.lat = newCoordinates.latitude
-            point.lng = newCoordinates.longitude
-            point.type = .user
+            let point = Point(
+                name: "New Point",
+                latitude: newCoordinates.latitude,
+                longitude: newCoordinates.longitude,
+                type: .user
+            )
             
             DataManager.createPoint(point)
             addAnnotation(for: point)

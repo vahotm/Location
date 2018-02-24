@@ -9,6 +9,7 @@
 import Foundation
 import MapKit
 
+
 class PointAnnotation: NSObject, MKAnnotation {
     
     var title: String?
@@ -18,12 +19,12 @@ class PointAnnotation: NSObject, MKAnnotation {
     var point: Point?
     
     var markerTintColor: UIColor {
-        guard let type = point?.type else { return UIColor(hexString:"#e74c3c") }
+        guard let type = point?.type else { return MarkerColor.red }
         switch type {
-        case .hard:
-            return UIColor(hexString:"#e74c3c") // red
+        case .predefined:
+            return MarkerColor.red
         case .user:
-            return UIColor(hexString:"#f1c40f") // yellow
+            return MarkerColor.yellow
         }
     }
     
@@ -33,6 +34,4 @@ class PointAnnotation: NSObject, MKAnnotation {
         self.subtitle = point.userDescription
         self.point = point
     }
-    
-    
 }
